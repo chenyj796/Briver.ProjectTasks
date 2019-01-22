@@ -105,7 +105,7 @@ namespace Briver.ProjectTasks
         {
             using (var mutex = new Mutex(true, hash, out var created))
             {
-                // 如果创建新互斥体失败，说明已经存在同名互斥体，则等待互斥体可用
+                // 如果存在同名互斥体，则等待其可用
                 if (!created) { mutex.WaitOne(); }
 
                 try

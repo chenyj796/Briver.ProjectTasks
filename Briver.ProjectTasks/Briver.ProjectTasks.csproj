@@ -2,18 +2,18 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <PackageId>Briver.ProjectTasks</PackageId>
+    <Authors>陈勇江</Authors>
+    <Version>1.2.1</Version>
+    <Company>Briver</Company>
+    <RepositoryUrl>https://github.com/chenyj796/Briver.ProjectTasks</RepositoryUrl>
+    <Description>将编译时的GIT版本信息写入程序集文件</Description>
   </PropertyGroup>
-
   <PropertyGroup>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <DevelopmentDependency>true</DevelopmentDependency>
-    <Description>将编译时的GIT版本信息写入程序集文件</Description>
-    <Authors>陈勇江</Authors>
-    <Company>Briver</Company>
-    <Version>1.2.1</Version>
-    <RepositoryUrl>https://github.com/chenyj796/Briver.ProjectTasks</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,8 +35,8 @@
   </ItemGroup>
 
   <Target Name="CopyNupkg" AfterTargets="Pack">
-    <Message Text="xcopy $(ProjectDir)$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg $(ProjectDir)..\..\" Importance="high" />
-    <Exec Command="xcopy $(ProjectDir)$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg $(ProjectDir)..\..\ /I /Y /Q" />
+    <Message Text="xcopy $(ProjectDir)$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg $(ProjectDir)..\.." Importance="high" />
+    <Exec Command="xcopy $(ProjectDir)$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg $(ProjectDir)..\.. /I /Y /Q" />
   </Target>
-  
+
 </Project>
