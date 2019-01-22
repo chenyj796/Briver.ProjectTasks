@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Briver.ProjectTasks.targets" />
+</Project>
