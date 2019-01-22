@@ -19,14 +19,14 @@
   <Target Name="Briver" AfterTargets="PrepareForBuild;">
 
     <PropertyGroup>
-      <TaskOutputMessage></TaskOutputMessage>
+      <InformationVersionTaskOutputMessage></InformationVersionTaskOutputMessage>
     </PropertyGroup>
 
     <InformationVersion ProjectDir="$(ProjectDir)" ProjectName="$(MSBuildProjectName)" AssemblyName="$(AssemblyName)">
-      <Output TaskParameter="OutputMessage" PropertyName="TaskOutputMessage" />
+      <Output TaskParameter="OutputMessage" PropertyName="InformationVersionTaskOutputMessage" />
     </InformationVersion>
     
-    <Message Text="$(TaskOutputMessage)" Importance="high" Condition="'$(TaskOutputMessage)' != ''"/>
+    <Message Text="$(InformationVersionTaskOutputMessage)" Importance="High" Condition="'$(InformationVersionTaskOutputMessage)' != ''"/>
 
   </Target>
 

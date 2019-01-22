@@ -58,7 +58,7 @@ namespace Briver.ProjectTasks
                     var readme = reader.ReadToEnd();
                     File.WriteAllLines(outputFile, new[] { readme, information });
                 }
-                //this.OutputMessage = $"{ProjectName}: 已重新生成{FileName}";
+                this.OutputMessage = $"{ProjectName}: 已重新生成{FileName}";
             }
             catch (Exception ex)
             {
