@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading;
@@ -88,11 +89,12 @@ namespace Briver.ProjectTasks
                 var time = DateTime.Now.ToString("yyyy/MM/dd");
                 var name = Command.Execute("git", "symbolic-ref --short -q HEAD", repository);
                 var hash = Command.Execute("git", "rev-parse HEAD", repository);
-                var addr = Command.Execute("git", "remote get-url --all origin", repository);
+                var addr = Command.Execute("git", "remote get-url --push origin", repository);
                 if (string.IsNullOrEmpty(addr))
                 {
                     addr = repository.Replace(@"\", @"\\");
                 }
+
                 AmendRepository(repository, hash);
 
                 return $"编译({time}) 分支({name}) 提交({hash}) 仓库({addr})";
