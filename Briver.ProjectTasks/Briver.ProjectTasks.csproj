@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>Briver.ProjectTasks</PackageId>
     <Authors>陈勇江</Authors>
-    <Version>1.2.3</Version>
+    <Version>1.2.4</Version>
     <Company>Briver</Company>
     <RepositoryUrl>https://github.com/chenyj796/Briver.ProjectTasks</RepositoryUrl>
     <Description>将编译时的GIT版本信息写入程序集文件</Description>

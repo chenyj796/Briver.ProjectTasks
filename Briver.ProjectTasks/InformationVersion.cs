@@ -100,7 +100,7 @@ namespace Briver.ProjectTasks
                 return $"编译({time}) 分支({name}) 提交({hash}) 仓库({addr})";
             }
 
-            throw new Exception($"未找到.git目录，无法生成版本信息");
+            return $"未加入源代码管理，无法生成版本信息";
         }
 
         private void AmendRepository(string repository, string hash)
