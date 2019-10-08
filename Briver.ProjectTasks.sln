@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.271
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Briver.ProjectTasks", "Briver.ProjectTasks\Briver.ProjectTasks.csproj", "{51CF1532-B995-4B57-8359-8B863BFF4EFD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Briver.ProjectTasks.Testing", "Briver.ProjectTasks.Testing\Briver.ProjectTasks.Testing.csproj", "{CD6614C8-4B3A-4931-A15F-44B75CA2C4D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{51CF1532-B995-4B57-8359-8B863BFF4EFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51CF1532-B995-4B57-8359-8B863BFF4EFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51CF1532-B995-4B57-8359-8B863BFF4EFD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD6614C8-4B3A-4931-A15F-44B75CA2C4D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD6614C8-4B3A-4931-A15F-44B75CA2C4D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD6614C8-4B3A-4931-A15F-44B75CA2C4D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD6614C8-4B3A-4931-A15F-44B75CA2C4D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

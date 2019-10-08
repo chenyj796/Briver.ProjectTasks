@@ -263,5 +263,3 @@ __pycache__/
 *.exe
 *.zip
 launchSettings.json
-
-*.xml

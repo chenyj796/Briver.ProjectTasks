@@ -1,42 +1,50 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <PackageId>Briver.ProjectTasks</PackageId>
-    <Authors>陈勇江</Authors>
-    <Version>1.2.4</Version>
-    <Company>Briver</Company>
-    <RepositoryUrl>https://github.com/chenyj796/Briver.ProjectTasks</RepositoryUrl>
-    <Description>将编译时的GIT版本信息写入程序集文件</Description>
-  </PropertyGroup>
-  <PropertyGroup>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <BuildOutputTargetFolder>tasks</BuildOutputTargetFolder>
-    <NoPackageAnalysis>true</NoPackageAnalysis>
-    <DevelopmentDependency>true</DevelopmentDependency>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFrameworks>netstandard2.0;</TargetFrameworks>
+        <PackageId>Briver.ProjectTasks</PackageId>
+        <OutputType>Library</OutputType>
+        <RootNamespace>Briver</RootNamespace>
+        <Authors>陈勇江</Authors>
+        <Version>1.3.0</Version>
+        <Company>Briver</Company>
+        <RepositoryUrl>https://github.com/chenyj796/Briver.ProjectTasks</RepositoryUrl>
+        <Description>项目生成时的任务</Description>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Framework" Version="15.9.20" PrivateAssets="All" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.9.20" PrivateAssets="All" />
-  </ItemGroup>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <BuildOutputTargetFolder>libraries</BuildOutputTargetFolder>
+        <NoPackageAnalysis>true</NoPackageAnalysis>
+        <DevelopmentDependency>true</DevelopmentDependency>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Properties\Package\tasks\" />
-    <None Include="Properties\Package\**" Pack="True" PackagePath="\" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Build.Framework" Version="16.3.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.3.0" PrivateAssets="All" />
+        <!--<PackageReference Include="Mono.Cecil" Version="0.11.0" PrivateAssets="All" />-->
+    </ItemGroup>
 
-  <ItemGroup>
-    <Compile Remove="Properties\Package\content\Properties\InformationVersion.cs" />
-  </ItemGroup>
+    <ItemGroup>
+        <None Include="Properties\Package\**" Pack="True" PackagePath="\" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="ReadMe.txt" />
-  </ItemGroup>
+    <ItemGroup>
+      <Compile Remove="Fody\**" />
+      <EmbeddedResource Remove="Fody\**" />
+      <None Remove="Fody\**" />
+    </ItemGroup>
 
-  <Target Name="CopyNupkg" AfterTargets="Pack">
-    <Message Text="xcopy $(ProjectDir)$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg $(ProjectDir)..\.." Importance="high" />
-    <Exec Command="xcopy $(ProjectDir)$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg $(ProjectDir)..\.. /I /Y /Q" />
-  </Target>
+    <ItemGroup>
+      <Compile Remove="AssemblyInformationTask - 复制.cs" />
+      <Compile Remove="InformationVersion.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Properties\Package\libraries\netstandard2.0\" />
+    </ItemGroup>
+
+    <Target Name="CopyNupkg" AfterTargets="Pack">
+        <Message Text="xcopy $(ProjectDir)$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg $(ProjectDir)..\.." Importance="high" />
+        <Exec Command="xcopy $(ProjectDir)$(PackageOutputPath)$(PackageId).$(PackageVersion).nupkg $(ProjectDir)..\.. /I /Y /Q" />
+    </Target>
 
 </Project>
