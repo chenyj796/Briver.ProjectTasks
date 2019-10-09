@@ -263,3 +263,4 @@ __pycache__/
 *.exe
 *.zip
 launchSettings.json
+/Briver.ProjectTasks/Assets/libraries/

@@ -7,7 +7,7 @@
 
     <UsingTask
         TaskName="Briver.AssemblyInformationTask"
-        AssemblyFile="$(PackageDir)libraries\netstandard2.0\Briver.ProjectTasks.dll" />
+        AssemblyFile="$(PackageDir)Tasks\netstandard2.0\Briver.ProjectTasks.dll" />
 
     <Target Name="AssemblyInformationTask" BeforeTargets="CoreCompile">
         

@@ -45,12 +45,6 @@ namespace Briver
         /// </summary>
         public string AttributeFile { get; set; }
 
-        /// <summary>
-        /// 是否写入默认的日志
-        /// </summary>
-        public bool Logging { get; set; } = true;
-
-
         private class Configuration
         {
             public class Token
@@ -74,25 +68,21 @@ namespace Briver
                 }
             }
 
-            public class Element
+            public string Template { get; set; }
+            public List<Token> Tokens { get; } = new List<Token>();
+
+            public Configuration(XElement config)
             {
-                public string Template { get; set; }
-                public List<Token> Tokens { get; } = new List<Token>();
+                this.Template = (string)config.Attribute(nameof(Template));
 
-                public Element(XElement config)
+                foreach (var item in config.Elements(nameof(Token)))
                 {
-                    this.Template = (string)config.Attribute(nameof(Template));
-
-                    foreach (var item in config.Elements(nameof(Token)))
+                    var token = new Token(item);
+                    if (token.IsValid())
                     {
-                        var token = new Token(item);
-                        if (token.IsValid())
-                        {
-                            this.Tokens.Add(token);
-                        }
+                        this.Tokens.Add(token);
                     }
                 }
-
             }
 
             public static string BuildInformation(AssemblyInformationTask task)
@@ -100,28 +90,39 @@ namespace Briver
                 var file = Path.Combine(task.ProjectDir, "Properties", "Briver.ProjectTasks.xml");
                 if (!File.Exists(file))
                 {
-                    throw new FileNotFoundException($"未找到配置文件{file}");
+                    var source = Path.Combine(task.PackageDir, "Properties", "Briver.ProjectTasks.xml");
+                    File.Copy(source, file, true);
                 }
-                var config = XElement.Load(file).Element(nameof(AssemblyInformationTask));
-
-                var element = new Element(config);
-                if (String.IsNullOrEmpty(element.Template))
+                var xml = XElement.Load(file).Element(nameof(AssemblyInformationTask));
+                if (xml == null)
                 {
+                    throw new InvalidOperationException($"配置文件“{file}”中不包含{nameof(AssemblyInformationTask)}节点");
                 }
 
-                var information = element.Template;
-                foreach (var token in element.Tokens)
+                var config = new Configuration(xml);
+                if (String.IsNullOrEmpty(config.Template))
+                {
+                    throw new InvalidOperationException($"{nameof(AssemblyInformationTask)}配置节点的{nameof(Template)}属性为空");
+                }
+
+                var information = config.Template;
+                foreach (var token in config.Tokens)
                 {
                     var content = Command.Execute(new Command.Options
                     {
                         Command = token.Command,
                         Arguments = token.Arguments,
-                        Directory = task.ProjectDir
+                        Directory = task.ProjectDir,
+                        Timeout = token.Timeout,
                     });
 
                     if (!String.IsNullOrEmpty(content))
                     {
                         information = Regex.Replace(information, $@"\{{{token.Name}\}}", content, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+                    }
+                    else
+                    {
+                        task.Log.LogWarning($"执行命令“{token.Command} {token.Arguments}”返回空值");
                     }
                 }
 
@@ -138,25 +139,18 @@ namespace Briver
             try
             {
                 var information = Configuration.BuildInformation(this);
-                if (Logging)
-                {
-                    Log.LogMessage(MessageImportance.Normal, $"{this.ProjectName}生成程序集版本信息：{information}");
-                }
+                information = information.Replace("\\", "\\\\").Replace("\"", "\\\"");
+                information = Regex.Replace(information, "\\s+", " ", RegexOptions.Singleline);
+                Log.LogMessage(MessageImportance.High, $"{this.ProjectName}生成程序集版本信息：{information}");
 
-                var attribute = information.Replace("\\", "\\\\").Replace("\"", "\\\"");
-                attribute = Regex.Replace(attribute, "\\s+", " ", RegexOptions.Singleline);
-                attribute = $"[assembly: System.Reflection.AssemblyInformationalVersion(\"{attribute}\")]";
-                File.WriteAllText(this.AttributeFile, attribute, Encoding.UTF8);
+                information = $"[assembly: System.Reflection.AssemblyInformationalVersion(\"{information}\")]";
+                File.WriteAllText(this.AttributeFile, information, Encoding.UTF8);
 
                 return true;
             }
             catch (Exception ex)
             {
-                if (Logging)
-                {
-                    Log.LogWarningFromException(ex);
-                }
-                else { throw; }
+                Log.LogErrorFromException(ex);
             }
             return false;
         }

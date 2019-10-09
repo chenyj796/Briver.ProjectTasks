@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<!--
+**********************************************
+此文件用于配置NuGet包“Briver.ProjectTasks”
+**********************************************
+-->
+<Briver.ProjectTasks>
+
+    <!-- 
+    ******************************************
+    任务名称：AssemblyInformationTask
+    功能说明：在编译时生成程序集的版本信息
+    
+    参数说明 **********************************
+    Template： 版本信息的模板，其中的占位符将被实际的值替换
+    Token：    占位符节点，用于模板中占位符的内容，如：{time}
+    Name：     占位符的名称
+    Command：  将要执行的命令
+    Arguments：命令的参数
+    Timeout：  命令执行的超时时间（单位：毫秒）
+    
+    ******************************************
+    -->
+    <AssemblyInformationTask
+        Template="编译({time}) 分支({branch}) 提交({hash}) 仓库({address})">
+
+        <Token Name="time" 
+               Command="powershell" 
+               Arguments="-NoProfile Get-Date -Format 'yyyy-MM-dd HH:mm:ss'"/>
+        <Token Name="branch" 
+               Command="git" 
+               Arguments="symbolic-ref --short -q HEAD" />
+        <Token Name="hash" 
+               Command="git" 
+               Arguments="rev-parse HEAD" />
+        <Token Name="address" 
+               Command="git" 
+               Arguments="remote get-url --push origin" />
+    </AssemblyInformationTask>
+
+</Briver.ProjectTasks>
