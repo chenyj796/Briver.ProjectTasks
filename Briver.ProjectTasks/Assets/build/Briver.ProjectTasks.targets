@@ -12,12 +12,12 @@
     <Target Name="AssemblyInformationTask" BeforeTargets="CoreCompile">
         
         <PropertyGroup>
-            <!--禁止生成AssemblyInformationVersionAttribute特性-->
+            <!--禁止生成AssemblyInformationVersionalAttribute特性-->
             <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
         </PropertyGroup>
         
         <ItemGroup>
-            <!--只在编译时（包含在Target中）才设置此编译项，避免其显示到解决方案中-->
+            <!--只在编译时（包含在Target中）才生效，避免其显示到解决方案中-->
             <Compile Include="$(AssemblyInformationalVersionAttributeFile)"/>
         </ItemGroup>
         
