@@ -59,7 +59,7 @@ namespace Briver.Utils
                 }
                 proc.WaitForExit(timeout);
 
-                return proc.StandardOutput.ReadToEnd();
+                return proc.StandardOutput.ReadToEnd().Trim();
             }
             catch (Exception ex)
             {
