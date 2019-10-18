@@ -1,15 +1,15 @@
 ﻿<Project>
 
     <PropertyGroup>
-        <PackageDir>$(MSBuildThisFileDirectory)..\</PackageDir>
-        <AssemblyInformationalVersionAttributeFile>$(ProjectDir)$(IntermediateOutputPath)AssemblyInformationalVersionAttribute.cs</AssemblyInformationalVersionAttributeFile>
+        <BriverPackageDir>$( [System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)../ ) )</BriverPackageDir>
+		<BriverAssemblyInformationalVersionAttributeFile>$(ProjectDir)$(IntermediateOutputPath)AssemblyInformationalVersionAttribute.cs</BriverAssemblyInformationalVersionAttributeFile>
     </PropertyGroup>
 
     <UsingTask
         TaskName="Briver.AssemblyInformationTask"
-        AssemblyFile="$(PackageDir)Tasks\netstandard2.0\Briver.ProjectTasks.dll" />
+        AssemblyFile="$(BriverPackageDir)Tasks\netstandard2.0\Briver.ProjectTasks.dll" />
 
-    <Target Name="AssemblyInformationTask" BeforeTargets="CoreCompile">
+    <Target Name="BriverAssemblyInformationTask" BeforeTargets="CoreCompile">
         
         <PropertyGroup>
             <!--禁止生成AssemblyInformationVersionalAttribute特性-->
@@ -18,16 +18,16 @@
         
         <ItemGroup>
             <!--只在编译时（包含在Target中）才生效，避免其显示到解决方案中-->
-            <Compile Include="$(AssemblyInformationalVersionAttributeFile)"/>
+            <Compile Include="$(BriverAssemblyInformationalVersionAttributeFile)"/>
         </ItemGroup>
         
         <Briver.AssemblyInformationTask
-            PackageDir="$(PackageDir)"
+            PackageDir="$(BriverPackageDir)"
             ProjectDir="$(ProjectDir)"
             ProjectName="$(MSBuildProjectName)"
             AssemblyName="$(AssemblyName)"
             AssemblyFile="$(ProjectDir)$(OutputPath)$(AssemblyName)$(TargetExt)"
-            AttributeFile="$(AssemblyInformationalVersionAttributeFile)"/>            
+            AttributeFile="$(BriverAssemblyInformationalVersionAttributeFile)"/>            
 
     </Target>
 
