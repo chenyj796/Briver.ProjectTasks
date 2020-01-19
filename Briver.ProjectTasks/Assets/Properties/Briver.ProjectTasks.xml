@@ -25,8 +25,8 @@
         Template="编译({time}) 分支({branch}) 提交({hash}) 仓库({address})">
 
         <Token Name="time" 
-               Command="powershell" 
-               Arguments="-NoProfile Get-Date -Format 'yyyy-MM-dd HH:mm:ss'"/>
+               Command="pwsh" 
+               Arguments="-Command Get-Date -Format 'yyyy-MM-dd HH:mm:ss'"/>
         <Token Name="branch" 
                Command="git" 
                Arguments="symbolic-ref --short -q HEAD" />

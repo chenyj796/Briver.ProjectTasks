@@ -6,7 +6,7 @@
         <OutputType>Library</OutputType>
         <RootNamespace>Briver</RootNamespace>
         <Authors>陈勇江</Authors>
-        <Version>1.3.105</Version>
+        <Version>1.3.106</Version>
         <Company>Briver</Company>
         <RepositoryUrl>https://github.com/chenyj796/Briver.ProjectTasks</RepositoryUrl>
         <Description>项目生成时的任务</Description>
