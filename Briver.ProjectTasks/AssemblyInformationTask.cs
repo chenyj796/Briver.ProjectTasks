@@ -111,21 +111,29 @@ namespace Briver
 				var information = config.Template;
 				foreach (var token in config.Tokens)
 				{
-					var content = Command.Execute(new Command.Options
+					try
 					{
-						Command = token.Command,
-						Arguments = token.Arguments,
-						Directory = task.ProjectDir,
-						Timeout = token.Timeout,
-					});
+						var content = Command.Execute(new Command.Options
+						{
+							Command = token.Command,
+							Arguments = token.Arguments,
+							Directory = task.ProjectDir,
+							Timeout = token.Timeout,
+						});
 
-					if (!String.IsNullOrEmpty(content))
-					{
-						information = Regex.Replace(information, $@"\{{{token.Name}\}}", content, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+						if (!String.IsNullOrEmpty(content))
+						{
+							information = Regex.Replace(information, $@"\{{{token.Name}\}}", content, RegexOptions.IgnoreCase | RegexOptions.Singleline);
+						}
+						else
+						{
+							task.Log.LogWarning($"执行命令“{token.Command} {token.Arguments}”返回空值");
+						}
 					}
-					else
+					catch (Exception ex)
 					{
-						task.Log.LogWarning($"执行命令“{token.Command} {token.Arguments}”返回空值");
+						task.Log.LogError($"执行命令“{token.Command}”发生异常：{ex.ToString()}");
+						break;
 					}
 				}
 
