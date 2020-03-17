@@ -6,9 +6,12 @@
     </PropertyGroup>
 
     <UsingTask
-        TaskName="Briver.AssemblyInformationTask"
+        TaskName="Shell"
         AssemblyFile="$(BriverPackageDir)Tasks\netstandard2.0\Briver.ProjectTasks.dll" />
 
+    <UsingTask
+        TaskName="Briver.AssemblyInformationTask"
+        AssemblyFile="$(BriverPackageDir)Tasks\netstandard2.0\Briver.ProjectTasks.dll" />
     <Target Name="BriverAssemblyInformationTask" BeforeTargets="CoreCompile">
         
         <PropertyGroup>
